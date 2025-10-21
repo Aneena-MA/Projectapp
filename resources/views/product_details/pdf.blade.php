@@ -21,5 +21,7 @@
             <p><strong>Total Amount:</strong> ₹{{ $products->total_amount ?? '' }}</p>
         </div>
     </div>
+
+    
 </body>
 </html>

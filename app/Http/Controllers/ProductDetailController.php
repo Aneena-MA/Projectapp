@@ -6,7 +6,7 @@ use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Exports\ProductDetailExport;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 class ProductDetailController extends Controller
 {
@@ -47,8 +47,7 @@ class ProductDetailController extends Controller
     public function edit($id)
     {
         $productdetails=ProductDetail::findorfail($id);
-     
-         $products=Product::with('productdetails')->get();
+        $products=Product::with('productdetails')->get();
         // dd($products);
         return view('product_details.productdetailedit',compact('productdetails','products'));
     }
@@ -87,5 +86,11 @@ class ProductDetailController extends Controller
         $product = ProductDetail::findOrFail($id);
         // dd($product);
         return Excel::download(new ProductDetailExport($product), 'product_'.$id.'.xlsx');
+    }
+    public function generatepdf($id)
+    {
+        $products = ProductDetail::with('products')->findOrFail($id);
+        $pdf = Pdf::loadView('product_details.pdf', compact('products'));
+        return $pdf->download('product_detail_'.$products->id.'.pdf');
     }
 }

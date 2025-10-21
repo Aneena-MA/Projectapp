@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
      Route::delete('/product-details/delete/{id}', [ProductDetailController::class, 'delete'])->name('productdetail.delete');
      Route::get('/product-details/show/{id}', [ProductDetailController::class, 'show'])->name('productdetail.show');
      Route::get('/products/{id}/export', [ProductDetailController::class, 'exportExcel'])->name('productdetail.export');
+     Route::get('/products/{id}/pdf', [ProductDetailController::class, 'generatepdf'])->name('productdetail.pdf');
 
 });
 
